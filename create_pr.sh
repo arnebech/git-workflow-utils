@@ -3,6 +3,12 @@
 
 set -e
 
+
+git_url=$(git config --get remote.origin.url)
+
+github_repo_name=$(basename "${git_url}" .git)
+
+
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "${dir}/settings.global.sh"
 
@@ -30,7 +36,7 @@ if branch=$(git symbolic-ref --short -q HEAD); then
   fi
 
 
-  url="https://github.com/${GITHUB_USERNAME}/datapad-web/compare/datapad:${receving_branch}...${branch}"
+  url="https://github.com/${GITHUB_USERNAME}/${github_repo_name}/compare/datapad:${receving_branch}...${branch}"
 
   echo "This will push ${branch} to origin, and open the PR page for you."
   echo -n "Did you remember to run ${A_RED}GRUNT TEST and NOSETESTS?${A_NO} "
